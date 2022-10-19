@@ -1,6 +1,6 @@
 import './App.css';
-import React, {useState, useCallback, useRef, useEffect, useId} from 'react';
-import MyHeader from './components/Message.js';
+import React, {useState, useEffect} from 'react';
+//import MyHeader from './components/Message.js';
 
 function App() {
   // return (
@@ -40,3 +40,45 @@ function App() {
 }
 
 export default App;
+
+const Form = ({data, setData, setMessage}) => {
+  const {text, author} = data;
+
+  const submitForm = (e) => {
+    e.preventDefault()
+    if(text.length > 0){
+      setMessage(prevstate => [...prevstate, {text, author}])
+    }
+    setData(
+      {
+        text: '',
+        author:''
+      }
+    )
+  }
+
+  return(
+    <form onSubmit = {submitForm}>
+      <input placeholder='Имя' value={text} onChange = {(e) =>
+        setData(prevstate => ({...prevstate, text: e.target.value}))
+      }/>
+
+      <input placeholder='Текст' value={author} onChange = {(e) =>
+        setData(prevstate => ({...prevstate, author: e.target.value}))
+      }/>
+
+      <button type='submit'>Отправить</button>
+    </form>
+  )
+}
+
+const Message = ({author, text}) => {
+  return(
+    <div>
+      <hr/>
+      <h1>{author}</h1>
+      <p>{text}</p>
+      <hr/>
+    </div>
+  )
+}
